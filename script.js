@@ -3,74 +3,51 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const gestureText = document.getElementById("gestureText");
 
-// Start Camera
+// Start camera
 async function startCamera() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         video.srcObject = stream;
-        await video.play();
+
+        video.onloadedmetadata = () => {
+            video.play();
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+        };
     } catch (err) {
-        console.error("Camera error:", err);
         gestureText.innerText = "Camera Blocked!";
     }
 }
 
-// Distance helper
-function distance(a, b) {
-    return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
-}
-
-// Finger up/down helper
-function isFingerUp(tip, pip) {
-    return tip.y < pip.y;
-}
-
-// Gesture Detection Logic
+// Gesture detection
 function detectGesture(lm) {
-    const thumbTip = lm[4];
-    const indexTip = lm[8];
-    const indexPip = lm[6];
-    const middleTip = lm[12];
-    const middlePip = lm[10];
-    const ringTip = lm[16];
-    const ringPip = lm[14];
-    const pinkyTip = lm[20];
-    const pinkyPip = lm[18];
+    if (!lm) return "No Hand";
+
+    const thumb = lm[4];
+    const index = lm[8];
     const wrist = lm[0];
 
-    const indexUp = isFingerUp(indexTip, indexPip);
-    const middleUp = isFingerUp(middleTip, middlePip);
-    const ringUp = isFingerUp(ringTip, ringPip);
-    const pinkyUp = isFingerUp(pinkyTip, pinkyPip);
+    const dist = Math.hypot(thumb.x - index.x, thumb.y - index.y);
+    if (dist < 0.05) return "Pinch";
 
-    const pinchDist = distance(thumbTip, indexTip);
+    if (thumb.y < wrist.y - 0.1) return "Thumbs Up";
 
-    if (pinchDist < 0.04) return "Pinch";
-    if (!indexUp && !middleUp && !ringUp && !pinkyUp) return "Fist";
-    if (indexUp && middleUp && ringUp && pinkyUp) return "Open Palm";
-    if (indexUp && !middleUp && !ringUp && !pinkyUp) return "Point";
-    if (indexUp && middleUp && !ringUp && !pinkyUp) return "V Sign";
-    if (thumbTip.y < wrist.y - 0.05 && !indexUp && !middleUp && !ringUp && !pinkyUp)
-        return "Thumbs Up";
-
-    return "Unknown";
+    return "Hand Detected";
 }
 
-// Load MediaPipe Hands using CDN
+// MediaPipe Hands
 const hands = new Hands({
-    locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
 });
 
 hands.setOptions({
     maxNumHands: 1,
-    modelComplexity: 1,
-    minDetectionConfidence: 0.6,
-    minTrackingConfidence: 0.6
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence: 0.5
 });
 
-hands.onResults(results => {
+hands.onResults((results) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
 
     if (!results.multiHandLandmarks) {
         gestureText.innerText = "---";
@@ -78,23 +55,22 @@ hands.onResults(results => {
     }
 
     const lm = results.multiHandLandmarks[0];
-
     drawConnectors(ctx, lm, HAND_CONNECTIONS, { color: "#00eaff", lineWidth: 2 });
-    drawLandmarks(ctx, lm, { color: "#ff0000", lineWidth: 1 });
+    drawLandmarks(ctx, lm, { color: "red", lineWidth: 1 });
 
-    gestureText.innerText = detectGesture(lm);
+    const gesture = detectGesture(lm);
+    gestureText.innerText = gesture;
 });
 
-const camera = new Camera(video, {
-    onFrame: async () => {
-        await hands.send({ image: video });
-    },
-    width: 640,
-    height: 480
-});
+// Camera loop
+async function processFrame() {
+    await hands.send({ image: video });
+    requestAnimationFrame(processFrame);
+}
 
 startCamera();
-camera.start();
+video.addEventListener("playing", processFrame);
+
 
 
 
