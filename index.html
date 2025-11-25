@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACA – Arnav Gesture Control</title>
+    <title>ACA – Arnav Gesture Control System</title>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Working MediaPipe Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1678019408/drawing_utils.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1678019408/camera_utils.js"></script>
+    <!-- MediaPipe Libraries (ALL REQUIRED) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 </head>
 
 <body>
@@ -20,20 +21,23 @@
         <p class="subtitle">Futuristic Cyberpunk Hand Tracking Interface</p>
     </div>
 
+    <!-- Gesture Panel -->
     <div id="gesturePanel">
         <h2>Gesture Detected:</h2>
         <p id="gestureText">---</p>
     </div>
 
+    <!-- Camera + Canvas -->
     <div class="camera-frame">
-        <!-- ⭐ IMPORTANT FIX: playsinline + muted -->
-        <video id="video" autoplay playsinline muted></video>
+        <video id="video" autoplay playsinline></video>
         <canvas id="canvas"></canvas>
     </div>
 
+    <!-- JS -->
     <script src="script.js"></script>
 
 </body>
 </html>
+
 
 
