@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Working MediaPipe CDN -->
+    <!-- Working MediaPipe Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1678019408/drawing_utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1678019408/camera_utils.js"></script>
@@ -20,15 +20,14 @@
         <p class="subtitle">Futuristic Cyberpunk Hand Tracking Interface</p>
     </div>
 
-    <!-- Gesture Panel -->
     <div id="gesturePanel">
         <h2>Gesture Detected:</h2>
         <p id="gestureText">---</p>
     </div>
 
-    <!-- Camera Window -->
     <div class="camera-frame">
-        <video id="video" autoplay playsinline></video>
+        <!-- ⭐ IMPORTANT FIX: playsinline + muted -->
+        <video id="video" autoplay playsinline muted></video>
         <canvas id="canvas"></canvas>
     </div>
 
@@ -36,4 +35,5 @@
 
 </body>
 </html>
+
 
