@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #0e0e0e;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 32px;
+    color: #00eaff;
+}
+
+.subtitle {
+    margin-top: -10px;
+    margin-bottom: 20px;
+    color: #bbbbbb;
+}
+
+.camera-wrapper {
+    position: relative;
+    width: 640px;
+    height: 480px;
+    margin: auto;
+    border: 3px solid #00eaff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+video, canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 640px;
+    height: 480px;
+}
+
+#gestureBox {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #111111;
+    border: 2px solid #00eaff;
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 20px;
+    color: #00eaff;
+}
