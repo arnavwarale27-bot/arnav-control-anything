@@ -1,4 +1,3 @@
-
 body {
     margin: 0;
     padding: 0;
@@ -38,7 +37,6 @@ body {
     overflow: hidden;
 }
 
-/* FIXED — canvas on top of video */
 video {
     position: absolute;
     top: 0;
@@ -54,7 +52,7 @@ canvas {
     left: 0;
     width: 640px;
     height: 480px;
-    z-index: 2;       /* canvas ABOVE video */
+    z-index: 2;
     pointer-events: none;
 }
 
@@ -74,4 +72,5 @@ canvas {
     margin-top: 10px;
     text-shadow: 0 0 10px #00eaff;
 }
+
 
