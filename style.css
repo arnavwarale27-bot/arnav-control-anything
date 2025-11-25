@@ -1,3 +1,4 @@
+
 body {
     margin: 0;
     padding: 0;
@@ -37,6 +38,7 @@ body {
     overflow: hidden;
 }
 
+/* FIXED — canvas on top of video */
 video {
     position: absolute;
     top: 0;
@@ -52,10 +54,8 @@ canvas {
     left: 0;
     width: 640px;
     height: 480px;
-    z-index: 2;   /* canvas ABOVE video */
-    pointer-events: none; /* allows clicking through */
-}
-
+    z-index: 2;       /* canvas ABOVE video */
+    pointer-events: none;
 }
 
 #gesturePanel {
