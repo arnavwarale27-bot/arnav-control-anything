@@ -87,7 +87,48 @@ const hands = new Hands({
 
 hands.setOptions({
   maxNumHands: 1,
-  minDetectionConfiden
+  minDetectionConfidence: 0.6,
+  minTrackingConfidence: 0.6
+});
+
+hands.onResults(results => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (results.image) {
+    ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+  }
+
+  if (!results.multiHandLandmarks) {
+    gestureText.innerText = "---";
+    return;
+  }
+
+  const lm = results.multiHandLandmarks[0];
+
+  drawConnectors(ctx, lm, HAND_CONNECTIONS, { color: "#00eaff", lineWidth: 2 });
+  drawLandmarks(ctx, lm, { color: "#ff0066", lineWidth: 2 });
+
+  const gesture = detectGesture(lm);
+  gestureText.innerText = gesture;
+
+  const indexTip = lm[8];
+  const x = indexTip.x * canvas.width;
+  const y = indexTip.y * canvas.height;
+
+  const rect = canvas.getBoundingClientRect();
+  neon.style.left = rect.left + x + "px";
+  neon.style.top = rect.top + y + "px";
+});
+
+// ⭐ FINAL FIXED LOOP (manual)
+async function mainLoop() {
+  await hands.send({ image: video });
+  requestAnimationFrame(mainLoop);
+}
+
+// Start everything
+startCamera().then(mainLoop);
+
 
 
 
