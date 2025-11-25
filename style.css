@@ -37,12 +37,25 @@ body {
     overflow: hidden;
 }
 
-video, canvas {
+video {
     position: absolute;
     top: 0;
     left: 0;
     width: 640px;
     height: 480px;
+    z-index: 1;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 640px;
+    height: 480px;
+    z-index: 2;   /* canvas ABOVE video */
+    pointer-events: none; /* allows clicking through */
+}
+
 }
 
 #gesturePanel {
