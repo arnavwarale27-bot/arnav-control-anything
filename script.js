@@ -2,6 +2,16 @@ const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+// IMPORTANT — Real canvas size for gesture accuracy
+canvas.width = 640;
+canvas.height = 480;
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+canvas.width = 640;
+canvas.height = 480;
+
+
 const gestureText = document.getElementById("gestureText");
 
 // Start Camera
