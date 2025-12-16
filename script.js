@@ -1,31 +1,14 @@
 console.log("Script loaded!");
 
+window.onload = () => {
+
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const gestureText = document.getElementById("gestureText");
 
 // -------------------------
-//  Start Camera
-// -------------------------
-async function startCamera() {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: "user" }
-        });
-
-        video.srcObject = stream;
-        await video.play();
-
-        console.log("Camera started!");
-    } catch (e) {
-        console.error("Camera error:", e);
-        gestureText.innerText = "Camera Blocked!";
-    }
-}
-
-// -------------------------
-// Gesture Detection Helper
+// Gesture Helpers
 // -------------------------
 function distance(a, b) {
     return Math.hypot(a.x - b.x, a.y - b.y);
@@ -49,7 +32,6 @@ function detectGesture(lm) {
     const middlePip = lm[10];
     const ringPip = lm[14];
     const pinkyPip = lm[18];
-
     const wrist = lm[0];
 
     const indexUp = isFingerUp(indexTip, indexPip);
@@ -70,10 +52,11 @@ function detectGesture(lm) {
 }
 
 // -------------------------
-// MediaPipe Setup
+// MediaPipe Hands
 // -------------------------
 const hands = new Hands({
-    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+    locateFile: file =>
+      `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
 });
 
 hands.setOptions({
@@ -83,29 +66,31 @@ hands.setOptions({
     minTrackingConfidence: 0.7
 });
 
-hands.onResults((results) => {
+hands.onResults(results => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
+    if (!results.multiHandLandmarks) {
         gestureText.innerText = "---";
         return;
     }
 
     const lm = results.multiHandLandmarks[0];
 
-    // Draw hand connections
-    drawConnectors(ctx, lm, HAND_CONNECTIONS, { color: "#00eaff", lineWidth: 3 });
+    drawConnectors(ctx, lm, HAND_CONNECTIONS, {
+        color: "#00eaff",
+        lineWidth: 3
+    });
 
-    // Draw landmarks
-    drawLandmarks(ctx, lm, { color: "#ff0000", radius: 3 });
+    drawLandmarks(ctx, lm, {
+        color: "#ff0000",
+        radius: 3
+    });
 
-    // Detect gesture
-    const gesture = detectGesture(lm);
-    gestureText.innerText = gesture;
+    gestureText.innerText = detectGesture(lm);
 });
 
 // -------------------------
-// Camera Utils Setup
+// Camera (ONLY THIS)
 // -------------------------
 const camera = new Camera(video, {
     onFrame: async () => {
@@ -115,12 +100,5 @@ const camera = new Camera(video, {
     height: 480
 });
 
-// Start
-startCamera();
 camera.start();
-
-
-
-
-
-
+};
