@@ -1,77 +1,28 @@
 body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(120deg, #020202, #040d17, #001f33);
-    background-size: 300% 300%;
-    animation: bgAnimation 10s infinite alternate;
-    color: #00eaff;
-    font-family: 'Orbitron', sans-serif;
-    text-align: center;
-}
-
-@keyframes bgAnimation {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-}
-
-.header h1 {
-    margin-top: 25px;
-    font-size: 36px;
-    text-shadow: 0 0 10px #00eaff;
-}
-
-.subtitle {
-    margin-top: -10px;
-    color: #66d9ff;
-    font-size: 18px;
-}
-
-.camera-frame {
-    position: relative;
-    width: 640px;
-    height: 480px;
-    margin: 40px auto;
-    border: 3px solid #00eaff;
-    border-radius: 15px;
-    box-shadow: 0 0 30px #00eaff;
-    overflow: hidden;
-}
-
-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 640px;
-    height: 480px;
-    z-index: 1;
-}
-
-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 640px;
-    height: 480px;
-    z-index: 2;
-    pointer-events: none;
+  background: radial-gradient(circle, #001a2e, #000814);
+  color: #00eaff;
+  font-family: Arial, sans-serif;
+  text-align: center;
 }
 
 #gesturePanel {
-    margin: auto;
-    width: 300px;
-    padding: 20px;
-    border: 3px solid #00eaff;
-    border-radius: 12px;
-    box-shadow: 0 0 25px #00eaff;
-    background: rgba(0, 15, 25, 0.7);
+  width: 300px;
+  margin: 20px auto;
+  border: 2px solid #00eaff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #00eaff;
 }
 
-#gestureText {
-    font-size: 26px;
-    color: #00eaff;
-    margin-top: 10px;
-    text-shadow: 0 0 10px #00eaff;
+canvas {
+  border: 2px solid #00eaff;
+  border-radius: 10px;
+  box-shadow: 0 0 25px #00eaff;
+  margin-top: 20px;
 }
 
+video {
+  display: none;
+}
 
 
