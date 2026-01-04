@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ACA – Arnav Gesture Control</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ACA – Arnav Gesture Control</title>
 
-    <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css" />
 
-    <!-- MediaPipe CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+  <!-- MediaPipe CDN (ORDER MATTERS) -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 </head>
 
 <body>
-    <h1>ACA – Arnav Gesture Control System</h1>
 
-    <div id="gesturePanel">
-        <h2>Gesture Detected:</h2>
-        <p id="gestureText">---</p>
-    </div>
+  <h1>ACA – Arnav Gesture Control System</h1>
 
-    <div class="camera-frame">
-        <video id="video" autoplay playsinline></video>
-        <canvas id="canvas"></canvas>
-    </div>
+  <div id="gesturePanel">
+    <h2>Gesture Detected:</h2>
+    <p id="gestureText">---</p>
+  </div>
 
-    <script src="script.js"></script>
+  <video id="video" autoplay muted playsinline></video>
+  <canvas id="canvas" width="640" height="480"></canvas>
+
+  <!-- Your JS MUST be last -->
+  <script src="script.js"></script>
+
 </body>
 </html>
 
